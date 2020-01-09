@@ -1,15 +1,14 @@
 
-const BASE_URL = 'https://api.abalin.net/namedays?country=se';
+const URL = 'https://api.abalin.net/namedays?country=se';
 
 
 
-const getCurrentWeather = async (month, day) => {
+const getNameday = async (month, day) => {
     
-    const response = await fetch(`${BASE_URL}&${month}=7&${day}`);
+    const response = await fetch(`${URL}&month=${month}&day=${day}`);
     
-    const data = await response.json();
+    const result = await response.json();
 
-    return data;
+    return result;
 
 };
-
