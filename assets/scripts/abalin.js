@@ -1,14 +1,26 @@
 
-const URL = 'https://api.abalin.net/namedays?country=se';
+const URL_DATE = 'https://api.abalin.net/namedays?country=';
 
-
-
-const getNameday = async (month, day) => {
+const getNameday = async (country, month, day) => {
     
-    const response = await fetch(`${URL}&month=${month}&day=${day}`);
+    const response = await fetch(`${URL_DATE}${country}&month=${month}&day=${day}`);
     
-    const result = await response.json();
+    const resultName = await response.json();
 
-    return result;
+    return resultName;
 
 };
+
+
+const URL_NAME = 'https://api.abalin.net/getdate?name=';
+
+const getName = async (nameEl, country) => {
+    
+    const response = await fetch(`${URL_NAME}${nameEl}&country=se`);
+    
+    const resultDay = await response.json();
+
+    return resultDay;
+    
+};
+
