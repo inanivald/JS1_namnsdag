@@ -14,9 +14,9 @@ const getNameday = async (country, month, day) => {
 
 const URL_NAME = 'https://api.abalin.net/getdate?name=';
 
-const getName = async (nameEl, country) => {
+const getName = async (nameEl, countryName) => {
     
-    const response = await fetch(`${URL_NAME}${nameEl}&country=se`);
+    const response = await fetch(`${URL_NAME}${nameEl}&country=${countryName}`);
     
     const resultDay = await response.json();
 

@@ -1,9 +1,14 @@
 
 const month = document.querySelector('#month').value;
 const day = document.querySelector('#day').value;
-const country = document.querySelector('#country').value;
+//const country = document.querySelector('#country').value;
+var f = document.querySelector("#custom-select");
+var country = f.options[f.selectedIndex].value;
+var countryEl = f.options[f.selectedIndex].text;
 const nameEl = document.querySelector('#namename').value;
-
+var g = document.querySelector("#custom-select-name");
+var countryName = g.options[g.selectedIndex].value;
+var countryElName = g.options[g.selectedIndex].text;
 
 const renderAlertDay = (severity, msg) => {
     document.querySelector('#searchResultName').innerHTML = `
@@ -15,10 +20,9 @@ const renderNameday = resultName => {
     console.log(resultName);
     document.querySelector('#searchResultName').innerHTML = `
         <div class="card mt-4">
-                <p>${resultName.data[0].namedays.se} har namnsdag den ${day}/${month}.</p>
-            
-                <p class="country">${country}
-                </p>`
+        <h1>${resultName.data[0].namedays[country]} </h1>
+                <p>I ${countryEl} har ${resultName.data[0].namedays[country]} 
+                namnsdag den ${day}/${month}.</p>`
             
 };
 
@@ -55,14 +59,14 @@ console.log(resultDay)
     const months = resultDay.results.map(month => month.month);
     document.querySelector('#searchResultDay').innerHTML = `
         <div class="card mt-4">
-        <p>${names.join(', ')} har namnsdag den ${days.join('')}/${months.join('')}.</p>
+        <p>I ${countryElName} har ${names.join(', ')} namnsdag den ${days.join('')}/${months.join('')}.</p>
         </div>`
 };
 
 document.querySelector('#name').addEventListener('submit', e => {
     e.preventDefault();
     
-getName(nameEl, country)
+getName(nameEl, countryName)
 .then(resultDay => {
   renderName(resultDay);
   
