@@ -3,14 +3,14 @@
 }
 
 body {
-	background-color: #efefef;
-	color: #333;
+	background-color: rgb(3, 27, 58);
+	color: #efefef;
 	line-height: 1.5;
     letter-spacing: 0.1em;
     
 }
 .container {
-    max-width: 600px;
+    max-width: 400px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -18,9 +18,11 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 0.75em;
 }
 .card {
-	padding: 0.375rem 0.75rem
-};
+	padding: 0.375rem 0.75rem;
+	color: rgb(3, 27, 58);
+}
 /* 
 .form-inline .form-control {
 	width: 100% !important;
 } */
+

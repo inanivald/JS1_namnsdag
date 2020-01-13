@@ -1,10 +1,12 @@
-
-const month = document.querySelector('#month').value;
-const day = document.querySelector('#day').value;
+const h = document.querySelector("#month");
+const month = h.options[h.selectedIndex].value;
+const monthEl = h.options[h.selectedIndex].text;
+const i = document.querySelector("#day");
+const day = i.options[i.selectedIndex].value;
 const f = document.querySelector("#custom-select");
 const country = f.options[f.selectedIndex].value;
 const countryEl = f.options[f.selectedIndex].text;
-const nameEl = document.querySelector('#namename').value;
+const nameEl = document.querySelector('#namename');
 const g = document.querySelector("#custom-select-name");
 const countryName = g.options[g.selectedIndex].value;
 const countryElName = g.options[g.selectedIndex].text;
@@ -20,12 +22,12 @@ const renderNameday = resultName => {
         <div class="card mt-4">
         <h2>${resultName.data[0].namedays[country]}</h2>
                 <p>I ${countryEl} har ${resultName.data[0].namedays[country]} 
-                namnsdag den ${day}/${month}.</p>`         
+                namnsdag den ${day} ${monthEl}.</p>`         
 };
 
 
 
-//month.innerHTML = "";
+
 document.querySelector('#nameday').addEventListener('submit', e => {
     e.preventDefault();
 getNameday(country, month, day)
@@ -41,12 +43,17 @@ getNameday(country, month, day)
 })
 .catch(resultName => {
     console.log(resultName)
-   if (f.options[f.selectedIndex].text === 'Välj land'){
-    renderAlertDay('danger', `Du måste välja land.`)
-   } else {
-    renderAlertDay('danger', `${day}/${month} är inte ett korrekt datum.`);
+   if (f.options[f.selectedIndex].text === 'Välj land')
+   { renderAlertDay('danger', 'Du måste välja land.')
+   } else if (h.options[h.selectedIndex].text === 'Välj månad')
+       { renderAlertDay('danger', 'Du måste välja en månad.') 
+    } else if (i.options[i.selectedIndex].text === 'Välj dag')
+    { renderAlertDay('danger', 'Du måste välja en dag.'); 
+ } else {
+    renderAlertDay('danger', `${day}/${monthEl} är inte ett korrekt datum.`);
    }
     });
+ 
 });
 
 
@@ -69,24 +76,25 @@ console.log(resultDay)
 
 document.querySelector('#name').addEventListener('submit', e => {
     e.preventDefault();
-    
-getName(nameEl, countryName)
+    const nameEl2 = nameEl.value;
+getName(nameEl2, countryName)
 .then(resultDay => {
   renderName(resultDay);
   
     if (resultDay.results.length > 0){
     renderName(resultDay);
     } else {
-        renderAlertName('danger', `${nameEl} har ingen namnsdag i ${countryElName}. :(`);
+        renderAlertName('danger', `${nameEl2} har ingen namnsdag i ${countryElName}. :(`);
     }
 })
 .catch(resultDay => {
    if (g.options[g.selectedIndex].text === 'Välj land'){
-    renderAlertName('danger', `Du måste välja land.`)
+    renderAlertName('danger', 'Du måste välja land.')
    } else {
-    renderAlertName('danger', `${day}/${month} är inte ett korrekt datum.`);
+    renderAlertName('danger', 'Du måste ange ett namn.');
    }
     });
+    nameEl.value = '';
 });
 
 
