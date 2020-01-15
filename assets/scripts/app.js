@@ -4,7 +4,8 @@ const country = document.querySelector("#custom-select");
 const nameEl = document.querySelector('#namename');
 const countryName = document.querySelector("#custom-select-name");
 const countryElName = document.querySelector("#custom-select-name");
-
+const nameday = document.querySelector("#nameday");
+const name = document.querySelector("#name");
 
 const renderAlertDay = (severity, msg) => {
     document.querySelector('#searchResultName').innerHTML = `
@@ -14,16 +15,18 @@ const renderAlertDay = (severity, msg) => {
 
 const renderNameday = resultName => {
     const day2 = day.value;
-    const month2 = month.value;
+    const selectedMonth = month.options[month.selectedIndex].text
     const country2 = country.value;
-
+    const selectedCountry = country.options[country.selectedIndex].text
+    
     console.log('rp', resultName)
     document.querySelector('#searchResultName').innerHTML = `
         <div class="card mt-4">
         <h2>${resultName.data[0].namedays[country2]}</h2>
-                <p>I ${country2} har ${resultName.data[0].namedays[country2]} 
-                namnsdag den ${day2}/${month2}.</p>`   
-
+                <p>I ${selectedCountry} har ${resultName.data[0].namedays[country2]} 
+                namnsdag den ${day2} ${selectedMonth}.</p>`   
+                
+                nameday.reset();
                 
 };
 
@@ -52,10 +55,8 @@ getNameday(country2, month2, day2)
     renderAlertDay('danger', `${day2}/${month2} är inte ett korrekt datum.`);
    }
     });
-    // document.querySelector("#day").value = ('Välj dag');
-    // document.querySelector("#month").value = ('Välj månad');
-    // document.querySelector("#custom-select").value = ('Välj land'); 
-
+    
+    
 });
 
 
@@ -64,20 +65,23 @@ const renderAlertName = (severity, msg) => {
     <div class="alert alert-${severity}" role="alert">${msg}</div>`;
 };
 
-const renderName = resultDay => {
-console.log(resultDay)
-    const names = resultDay.results.map(name => name.name);
-    const days = resultDay.results.map(day => day.day);
-    const months = resultDay.results.map(month => month.month);
-    const countryName2 = countryName.value;
-    document.querySelector('#searchResultDay').innerHTML = `
-        <div class="card mt-4">
-        <h2>${days.join('')}/${months.join('')}</h2>
-        <p>I ${countryName2} har ${names.join(', ')} namnsdag den ${days.join('')}/${months.join('')}.</p>
-        </div>`
-       
-      
-};
+const renderName = (resultDay => {
+    const selectedCountry = countryName.options[countryName.selectedIndex].text
+    
+   
+    //loop the array to get info
+    resultDay.results.forEach(result => {
+        document.querySelector('#searchResultDay').innerHTML = `
+                <div class="card mt-4">
+                <h2>${result.day}/${result.month}</h2>
+                <p>I ${selectedCountry} har ${result.name} namnsdag den ${result.day}/${result.month}.</p>
+                </div>
+        `;
+
+    });
+    //reset input fields
+    name.reset();
+});
 
 document.querySelector('#name').addEventListener('submit', e => {
     e.preventDefault();
@@ -96,9 +100,7 @@ getName(nameEl2, countryName2)
         //network error
         renderAlertName('danger', err);
     });
-    nameEl.value = '';
-    // document.querySelector("#custom-select-name").value = ('Välj land');
-        
+ 
     
 });
 
