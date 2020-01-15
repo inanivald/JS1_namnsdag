@@ -24,3 +24,14 @@ const getName = async (nameEl, countryName) => {
     
 };
 
+const URL_TIMEZONE = 'https://api.abalin.net/today?timezone='
+
+const getTimezone = async (timezone, countryTimezone) => {
+    
+    const response = await fetch(`${URL_TIMEZONE}${timezone}&country=${countryTimezone}`);
+    
+    const resultTimezone = await response.json();
+
+    return resultTimezone;
+    
+};
