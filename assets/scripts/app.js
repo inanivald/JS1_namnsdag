@@ -1,15 +1,10 @@
-const h = document.querySelector("#month");
-const month = h.options[h.selectedIndex].value;
-const monthEl = h.options[h.selectedIndex].text;
-const i = document.querySelector("#day");
-const day = i.options[i.selectedIndex].value;
-const f = document.querySelector("#custom-select");
-const country = f.options[f.selectedIndex].value;
-const countryEl = f.options[f.selectedIndex].text;
+const day = document.querySelector("#day");
+const month = document.querySelector("#month");
+const country = document.querySelector("#custom-select");
 const nameEl = document.querySelector('#namename');
-const g = document.querySelector("#custom-select-name");
-const countryName = g.options[g.selectedIndex].value;
-const countryElName = g.options[g.selectedIndex].text;
+const countryName = document.querySelector("#custom-select-name");
+const countryElName = document.querySelector("#custom-select-name");
+
 
 const renderAlertDay = (severity, msg) => {
     document.querySelector('#searchResultName').innerHTML = `
@@ -18,42 +13,49 @@ const renderAlertDay = (severity, msg) => {
 
 
 const renderNameday = resultName => {
+    const day2 = day.value;
+    const month2 = month.value;
+    const country2 = country.value;
+
+    console.log('rp', resultName)
     document.querySelector('#searchResultName').innerHTML = `
         <div class="card mt-4">
-        <h2>${resultName.data[0].namedays[country]}</h2>
-                <p>I ${countryEl} har ${resultName.data[0].namedays[country]} 
-                namnsdag den ${day} ${monthEl}.</p>`         
+        <h2>${resultName.data[0].namedays[country2]}</h2>
+                <p>I ${country2} har ${resultName.data[0].namedays[country2]} 
+                namnsdag den ${day2}/${month2}.</p>`   
+
+                
 };
-
-
-
 
 document.querySelector('#nameday').addEventListener('submit', e => {
     e.preventDefault();
-getNameday(country, month, day)
+   const day2 = day.value;
+   const month2 = month.value;
+   const country2 = country.value;
+
+getNameday(country2, month2, day2)
 .then(resultName => {
-   renderNameday(resultName);
+ console.log('Got response:', resultName);
  
-   if (resultName.data.length > 0){
     renderNameday(resultName)
-    } else {
-        renderAlertDay('warning', resultName.message);
-    }
-   
+ 
 })
 .catch(resultName => {
     console.log(resultName)
-   if (f.options[f.selectedIndex].text === 'Välj land')
-   { renderAlertDay('danger', 'Du måste välja land.')
-   } else if (h.options[h.selectedIndex].text === 'Välj månad')
+   if (day2 === 'Välj dag')
+   { renderAlertDay('danger', 'Du måste välja en dag.')
+   } else if (month2 === 'Välj månad')
        { renderAlertDay('danger', 'Du måste välja en månad.') 
-    } else if (i.options[i.selectedIndex].text === 'Välj dag')
-    { renderAlertDay('danger', 'Du måste välja en dag.'); 
+    } else if (country2 === 'Välj land')
+    { renderAlertDay('danger', 'Du måste välja ett land.'); 
  } else {
-    renderAlertDay('danger', `${day}/${monthEl} är inte ett korrekt datum.`);
+    renderAlertDay('danger', `${day2}/${month2} är inte ett korrekt datum.`);
    }
     });
- 
+    // document.querySelector("#day").value = ('Välj dag');
+    // document.querySelector("#month").value = ('Välj månad');
+    // document.querySelector("#custom-select").value = ('Välj land'); 
+
 });
 
 
@@ -67,34 +69,37 @@ console.log(resultDay)
     const names = resultDay.results.map(name => name.name);
     const days = resultDay.results.map(day => day.day);
     const months = resultDay.results.map(month => month.month);
+    const countryName2 = countryName.value;
     document.querySelector('#searchResultDay').innerHTML = `
         <div class="card mt-4">
         <h2>${days.join('')}/${months.join('')}</h2>
-        <p>I ${countryElName} har ${names.join(', ')} namnsdag den ${days.join('')}/${months.join('')}.</p>
+        <p>I ${countryName2} har ${names.join(', ')} namnsdag den ${days.join('')}/${months.join('')}.</p>
         </div>`
+       
+      
 };
 
 document.querySelector('#name').addEventListener('submit', e => {
     e.preventDefault();
+    
     const nameEl2 = nameEl.value;
-getName(nameEl2, countryName)
+    const countryName2 = countryName.value
+
+getName(nameEl2, countryName2)
 .then(resultDay => {
-  renderName(resultDay);
   
-    if (resultDay.results.length > 0){
     renderName(resultDay);
-    } else {
-        renderAlertName('danger', `${nameEl2} har ingen namnsdag i ${countryElName}. :(`);
-    }
+   
 })
-.catch(resultDay => {
-   if (g.options[g.selectedIndex].text === 'Välj land'){
-    renderAlertName('danger', 'Du måste välja land.')
-   } else {
-    renderAlertName('danger', 'Du måste ange ett namn.');
-   }
+
+    .catch(err => {
+        //network error
+        renderAlertName('danger', err);
     });
     nameEl.value = '';
+    // document.querySelector("#custom-select-name").value = ('Välj land');
+        
+    
 });
 
 
