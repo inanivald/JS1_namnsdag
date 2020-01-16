@@ -1,14 +1,15 @@
-const day = document.querySelector("#day");
-const month = document.querySelector("#month");
-const country = document.querySelector("#custom-select");
-const nameEl = document.querySelector('#namename');
-const countryName = document.querySelector("#custom-select-name");
-const nameday = document.querySelector("#nameday");
-const name = document.querySelector("#name");
-const timezone = document.querySelector("#search-timezone");
-const timezoneCountry = document.querySelector("#search-country-timezone");
-const timezoneForm = document.querySelector("#timezone");
+const day = document.querySelector("#day"); //drop down menu for "Välj dag"
+const month = document.querySelector("#month"); //drop down menu for "Välj månad"
+const country = document.querySelector("#custom-select"); //drop down menu for first "Välj land"
+const nameEl = document.querySelector('#namename'); //search field for "Namn"
+const countryName = document.querySelector("#custom-select-name"); //drop down menu for second "Välj land".
+const nameday = document.querySelector("#nameday"); //first form
+const name = document.querySelector("#name"); //second form
+const timezone = document.querySelector("#search-timezone"); //drop down menu for "Välj tidszon".
+const timezoneCountry = document.querySelector("#search-country-timezone"); //drop down menu for third "Välj land".
+const timezoneForm = document.querySelector("#timezone"); //third form
 
+// variable to render error codes for first form
 const renderAlertDay = (severity, msg) => {
     document.querySelector('#searchResultName').innerHTML = `
     <div class="alert alert-${severity}" role="alert">${msg}</div>`;
@@ -29,6 +30,7 @@ const renderNameday = resultName => {
 nameday.reset();
 };
 
+//Eventlistener for first form day
 document.querySelector('#nameday').addEventListener('submit', e => {
     e.preventDefault();
 
@@ -50,7 +52,7 @@ document.querySelector('#nameday').addEventListener('submit', e => {
     } else if (country2 === 'Välj land')
         { renderAlertDay('danger', 'Du måste välja ett land.'); 
     } else {
-        renderAlertDay('danger', err);
+        renderAlertDay('danger', 'Du har inte angivit ett giltigt datum.');
     }
 });
 });
@@ -61,7 +63,6 @@ const renderAlertName = (severity, msg) => {
 };
 
 const renderName = (resultDay => {
-    console.log(resultDay);
 const selectedCountry = countryName.options[countryName.selectedIndex].text;
     //loop the array to get info
     resultDay.results.forEach(result => {
@@ -75,7 +76,7 @@ const selectedCountry = countryName.options[countryName.selectedIndex].text;
     //reset input fields
     name.reset();
 });
-
+//Eventlistener for second form Name
 document.querySelector('#name').addEventListener('submit', e => {
     e.preventDefault();
     const nameEl2 = nameEl.value;
@@ -91,7 +92,7 @@ getName(nameEl2, countryName2)
         { renderAlertName('danger', 'Du måste skriva in ett namn och välja ett land.')
    
     } else {
-        renderAlertDay('danger', err);
+        renderAlertDay('danger', 'Det gick tyvärr inte att utföra sökningen.');
     }
 });
 });
@@ -116,7 +117,7 @@ country2 = timezoneCountry.value;
     //reset input fields
     timezoneForm.reset();
 });
-
+//Eventlistener for third form timezone
 document.querySelector('#timezone').addEventListener('submit', e => {
     
     e.preventDefault();
@@ -132,7 +133,7 @@ getTimezone(timezone2, timezoneCountry2)
     if (timezoneCountry2 === 'Välj land')
     { renderAlertTimezone('danger', 'Du måste välja ett land.');
     } else {
-        renderAlertDay('danger', err);
+        renderAlertDay('danger', 'Det gick tyvärr inte att utföra sökningen.');
     }
 });
 });
