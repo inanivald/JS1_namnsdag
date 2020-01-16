@@ -16,7 +16,6 @@ const renderAlertDay = (severity, msg) => {
 };
 
 const renderNameday = resultName => {
-    console.log(resultName)
     const day2 = day.value;
     const selectedMonth = month.options[month.selectedIndex].text
     const country2 = country.value;
@@ -34,8 +33,6 @@ nameday.reset();
 //Eventlistener for first form day
 document.querySelector('#nameday').addEventListener('submit', e => {
     e.preventDefault();
-    console.log(re)
-
    const day2 = day.value;
    const month2 = month.value;
    const country2 = country.value;
@@ -65,7 +62,7 @@ const renderAlertName = (severity, msg) => {
 };
 
 const renderName = (resultDay => {
-    console.log(resultDay);
+ 
 const selectedCountry = countryName.options[countryName.selectedIndex].text;
     //loop the array to get info
     resultDay.results.forEach(result => {
@@ -97,7 +94,7 @@ if (resultDay.results.length > 0) {
 })
 
 .catch(resultDay => {
-   console.log(resultDay)
+
     if (400) { 
         renderAlertName('danger', 'Du måste skriva in ett namn och välja ett land.')
     } else { renderAlertDay('danger', 'Det gick tyvärr inte att utföra sökningen.');
