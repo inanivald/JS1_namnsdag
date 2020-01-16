@@ -16,6 +16,7 @@ const renderAlertDay = (severity, msg) => {
 };
 
 const renderNameday = resultName => {
+    console.log(resultName)
     const day2 = day.value;
     const selectedMonth = month.options[month.selectedIndex].text
     const country2 = country.value;
@@ -33,6 +34,7 @@ nameday.reset();
 //Eventlistener for first form day
 document.querySelector('#nameday').addEventListener('submit', e => {
     e.preventDefault();
+    console.log(re)
 
    const day2 = day.value;
    const month2 = month.value;
@@ -63,6 +65,7 @@ const renderAlertName = (severity, msg) => {
 };
 
 const renderName = (resultDay => {
+    console.log(resultDay);
 const selectedCountry = countryName.options[countryName.selectedIndex].text;
     //loop the array to get info
     resultDay.results.forEach(result => {
@@ -78,25 +81,29 @@ const selectedCountry = countryName.options[countryName.selectedIndex].text;
 });
 //Eventlistener for second form Name
 document.querySelector('#name').addEventListener('submit', e => {
+  
     e.preventDefault();
     const nameEl2 = nameEl.value;
     const countryName2 = countryName.value
+    const selectedCountry = countryName.options[countryName.selectedIndex].text;
 
 getName(nameEl2, countryName2)
 .then(resultDay => {
+if (resultDay.results.length > 0) {
     renderName(resultDay);
+} else { 
+    renderAlertName('danger', `${nameEl2} har tyvärr ingen namnsdag i ${selectedCountry}.`)
+}
 })
-.catch(resultName => {
-   
-    if (400)
-        { renderAlertName('danger', 'Du måste skriva in ett namn och välja ett land.')
-   
-    } else {
-        renderAlertDay('danger', 'Det gick tyvärr inte att utföra sökningen.');
+
+.catch(resultDay => {
+   console.log(resultDay)
+    if (400) { 
+        renderAlertName('danger', 'Du måste skriva in ett namn och välja ett land.')
+    } else { renderAlertDay('danger', 'Det gick tyvärr inte att utföra sökningen.');
     }
 });
 });
-
 
 
 const renderAlertTimezone = (severity, msg) => {
@@ -105,6 +112,7 @@ const renderAlertTimezone = (severity, msg) => {
 };
 
 const renderTimezone = (resultTimezone => {
+   
 const selectedTimezoneCountry = timezoneCountry.options[timezoneCountry.selectedIndex].text;
 country2 = timezoneCountry.value;
         document.querySelector('#searchResultTimezone').innerHTML = `
