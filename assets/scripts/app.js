@@ -86,7 +86,7 @@ document.querySelector('#name').addEventListener('submit', e => {
 
 getName(nameEl2, countryName2)
 .then(resultDay => {
-if (resultDay.results.length > 0) {
+if (resultDay.results.length) {
     renderName(resultDay);
 } else { 
     renderAlertName('danger', `${nameEl2} har tyvärr ingen namnsdag i ${selectedCountry}.`)
